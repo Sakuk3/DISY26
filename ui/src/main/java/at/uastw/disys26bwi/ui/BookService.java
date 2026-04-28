@@ -1,4 +1,4 @@
-package org.example.disysfx;
+package at.uastw.disys26bwi.ui;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,4 +1,4 @@
-package org.example.disysfx;
+package at.uastw.disys26bwi.ui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

@@ -1,4 +1,4 @@
-module org.example.disysfx {
+module at.uastw.disys26bwi.ui {
   requires javafx.controls;
   requires javafx.fxml;
   requires java.net.http;
@@ -8,6 +8,6 @@ module org.example.disysfx {
   requires com.fasterxml.jackson.annotation;
 
 
-  opens org.example.disysfx to javafx.fxml;
-  exports org.example.disysfx;
+  opens at.uastw.disys26bwi.ui to javafx.fxml;
+  exports at.uastw.disys26bwi.ui;
 }

@@ -1,4 +1,4 @@
-package com.example.common.dto;
+package at.uastw.disys26bwi.common.dto;
 
 import java.time.LocalDateTime;
 

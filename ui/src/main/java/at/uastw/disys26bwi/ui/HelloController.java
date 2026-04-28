@@ -1,4 +1,4 @@
-package org.example.disysfx;
+package at.uastw.disys26bwi.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
