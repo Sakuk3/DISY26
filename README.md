@@ -75,7 +75,7 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
 ## Contributors
 
 - **Fritsch Lukas** - [@Sakuk](https://github.com/Sakuk3)
-- **Nagy Csaba**
+- **Nagy Csaba** - [@3Xabi](https://github.com/3Xabi)
 - **Thaler Lena** - [@mit-elan](https://github.com/mit-elan)
 
 ## Notes
