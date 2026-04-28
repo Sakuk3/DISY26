@@ -1,0 +1,55 @@
+# Monorepo docker-compose for DISY26
+#
+# The 'java-base' service builds the shared base image that both module
+# Dockerfiles mirror.  Build the base first before building the modules:
+#
+#   docker-compose build java-base
+#   docker-compose up --build
+#
+# Or build and start everything in one step:
+#   docker-compose up --build
+
+services:
+
+  # ------------------------------------------------------------------
+  # Base image – built and tagged so module Dockerfiles can reference it.
+  # This service has no running container; its only purpose is to produce
+  # the java-base:latest image consumed by the module builds.
+  # ------------------------------------------------------------------
+  java-base:
+    build:
+      context: ./docker
+      dockerfile: Dockerfile.base
+      target: runtime
+    image: java-base:latest
+
+  # ------------------------------------------------------------------
+  # Spring Boot REST module
+  # ------------------------------------------------------------------
+  springboot-app:
+    build:
+      context: ./springboot-app
+      dockerfile: Dockerfile
+    image: springboot-app:latest
+    ports:
+      - "8080:8080"
+    depends_on:
+      - java-base
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # ------------------------------------------------------------------
+  # JavaFX module
+  # ------------------------------------------------------------------
+  javafx-app:
+    build:
+      context: ./javafx-app
+      dockerfile: Dockerfile
+    image: javafx-app:latest
+    depends_on:
+      - java-base
+    restart: unless-stopped
