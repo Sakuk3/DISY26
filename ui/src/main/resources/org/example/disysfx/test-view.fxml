@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.disysfx.TestViewController">
+    <MenuBar VBox.vgrow="NEVER">
+            <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#onNewSession" text="New" />
+            <MenuItem mnemonicParsing="false" onAction="#onOpenSession" text="Open…" />
+            <Menu mnemonicParsing="false" text="Open Recent" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onCloseSession" text="Close" />
+            <MenuItem mnemonicParsing="false" onAction="#onSaveSession" text="Save" />
+            <MenuItem mnemonicParsing="false" onAction="#onSaveSessionAs" text="Save As…" />
+            <MenuItem mnemonicParsing="false" onAction="#onRevertSession" text="Revert" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onPreferences" text="Preferences…" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#onQuit" text="Quit" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Edit">
+            <MenuItem mnemonicParsing="false" text="Undo" />
+            <MenuItem mnemonicParsing="false" text="Redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Cut" />
+            <MenuItem mnemonicParsing="false" text="Copy" />
+            <MenuItem mnemonicParsing="false" text="Paste" />
+            <MenuItem mnemonicParsing="false" text="Delete" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Select All" />
+            <MenuItem mnemonicParsing="false" text="Unselect All" />
+        </Menu>
+        <Menu mnemonicParsing="false" text="Help">
+            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+        </Menu>
+    </MenuBar>
+    <SplitPane dividerPositions="0.5" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+        <AnchorPane prefHeight="573.0" prefWidth="346.0">
+            <Label fx:id="statusLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Ready" textAlignment="CENTER" wrapText="false">
+                <font>
+                    <Font size="18.0" />
+                </font>
+                <textFill>
+                    <Color red="0.624" green="0.624" blue="0.624" />
+                </textFill>
+            </Label>
+            <VBox prefHeight="551.0" prefWidth="222.0">
+                <Pane prefHeight="513.0" prefWidth="390.0" />
+                <ButtonBar prefHeight="40.0" prefWidth="357.0">
+                    <buttons>
+                        <Button fx:id="muteButton" mnemonicParsing="false" onAction="#onMuteToggle" text="Mute" />
+                        <Button fx:id="cameraButton" mnemonicParsing="false" onAction="#onCameraToggle" text="Camera" />
+                        <Button fx:id="disconnectButton" mnemonicParsing="false" onAction="#onDisconnect" text="Disconnect" />
+                        <Button fx:id="quitButton" mnemonicParsing="false" onAction="#onQuit" text="Quit" />
+                    </buttons>
+                </ButtonBar>
+            </VBox>
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <VBox prefHeight="573.0" prefWidth="530.0">
+                <Pane prefHeight="32.0" prefWidth="530.0">
+                    <Label layoutX="14.0" layoutY="8.0" text="Participants" />
+                </Pane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="237.0" prefWidth="530.0">
+                <ListView fx:id="participantsListView" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+            </ScrollPane>
+                <Pane prefHeight="30.0" prefWidth="530.0">
+                    <Label layoutX="17.0" layoutY="5.0" text="Chat" />
+                </Pane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="200.0" prefWidth="200.0">
+                <TextArea fx:id="chatHistoryArea" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+            </ScrollPane>
+            <GridPane prefHeight="64.0" prefWidth="530.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="463.0" minWidth="10.0" prefWidth="463.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.0" minWidth="10.0" prefWidth="67.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+                  <Button fx:id="sendButton" mnemonicParsing="false" onAction="#onSendMessage" prefHeight="31.0" prefWidth="67.0" text="Send" GridPane.columnIndex="1" />
+                  <TextArea fx:id="messageInputArea" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
+            </GridPane>
+            </VBox>
+        </AnchorPane>
+    </SplitPane>
+</VBox>
