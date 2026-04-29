@@ -71,13 +71,13 @@ class EnergyControllerIntegrationTest {
   ) implements EnergyRepository {
 
     @Override
-      public CurrentEnergyDto getCurrentEnergy() {
-        return currentEnergyDto;
-      }
-
-      @Override
-      public HistoricEnergyDto getHistoricEnergy(LocalDateTime start, LocalDateTime end) {
-        return historicEnergyDto;
-      }
+    public CurrentEnergyDto getCurrentEnergy() {
+      return currentEnergyDto;
     }
+
+    @Override
+    public HistoricEnergyDto getHistoricEnergy(LocalDateTime start, LocalDateTime end) {
+      return historicEnergyDto;
+    }
+  }
 }

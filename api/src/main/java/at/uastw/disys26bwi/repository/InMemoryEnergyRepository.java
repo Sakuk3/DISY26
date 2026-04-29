@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Random;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +28,7 @@ public class InMemoryEnergyRepository implements EnergyRepository {
   }
 
   public CurrentEnergyDto getCurrentEnergy() {
-   logger.debug("Generating current energy data");
+    logger.debug("Generating current energy data");
     return new CurrentEnergyDto(
       LocalDateTime.now(),
       this.round(random.nextDouble()),
@@ -35,11 +36,11 @@ public class InMemoryEnergyRepository implements EnergyRepository {
     );
   }
 
-  public HistoricEnergyDto getHistoricEnergy(LocalDateTime start, LocalDateTime  end) {
+  public HistoricEnergyDto getHistoricEnergy(LocalDateTime start, LocalDateTime end) {
     logger.debug("Generating historic energy data from {} to {}", start, end);
     double communityUsed = this.round(COMMUNITY_USED_MIN + random.nextDouble() * COMMUNITY_USED_SPAN);
     double communityProduced = this.round(random.nextDouble() * 2 * communityUsed);
-    double gridUsed = this.round(Math.max(0, communityUsed  - communityProduced));
+    double gridUsed = this.round(Math.max(0, communityUsed - communityProduced));
 
     return new HistoricEnergyDto(
       start,

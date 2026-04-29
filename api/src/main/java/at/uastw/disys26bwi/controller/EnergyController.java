@@ -30,8 +30,8 @@ public class EnergyController {
 
   @GetMapping("/historic")
   public HistoricEnergyDto getHistoricEnergy(
-      @RequestParam("start") LocalDateTime start,
-      @RequestParam("end") LocalDateTime  end
+    @RequestParam("start") LocalDateTime start,
+    @RequestParam("end") LocalDateTime end
   ) {
     logger.debug("Fetching historic energy data from {} to {}", start, end);
     EnergyQueryValidator.validateTimeRange(start, end);
