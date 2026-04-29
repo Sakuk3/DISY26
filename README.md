@@ -90,3 +90,7 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
 - The project uses Maven as the build tool
 - Docker Compose is used for containerized services
 - Modules are interconnected through the common module for shared data structures
+
+## License
+
+MIT License. See `LICENSE` for details and contributor attribution.
