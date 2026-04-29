@@ -9,7 +9,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -58,11 +57,6 @@ class EnergyControllerIntegrationTest {
       () -> controller.getHistoricEnergy(start, end));
 
     assertEquals("End time cannot be in the future", exception.getReason());
-  }
-
-  private static void assertPercentage(double value) {
-    assertTrue(value >= 0.0 && value <= 1.0,
-      () -> "Expected " + value + " to be a percentage between 0.0 and 1.0");
   }
 
   private record StubEnergyRepository(
