@@ -6,7 +6,7 @@ services:
       dockerfile: ./api/Dockerfile
     image: api:latest
     ports:
-      - "8081:8080"
+      - "8080:8080"
     depends_on:
       - database
     restart: unless-stopped
