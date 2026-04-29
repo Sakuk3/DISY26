@@ -2,8 +2,8 @@ name: DISY26GO
 services:
   api:
     build:
-      context: ./api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./api/Dockerfile
     image: api:latest
     ports:
       - "8081:8080"
@@ -19,7 +19,7 @@ services:
   database:
     image: "postgres:18.3"
     ports:
-      - 15432:5432
+      - "15432:5432"
     env_file:
       - .env
     networks:
@@ -31,7 +31,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     ports:
-      - 15433:80
+      - "15433:80"
     env_file:
       - .env
     depends_on:
@@ -40,6 +40,12 @@ services:
       - postgres-network
     volumes:
       - pgadmin-data:/var/lib/pgadmin
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
 networks:
   postgres-network:
