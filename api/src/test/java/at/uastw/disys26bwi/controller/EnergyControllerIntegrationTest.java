@@ -60,6 +60,12 @@ class EnergyControllerIntegrationTest {
     assertEquals("End time cannot be in the future", exception.getReason());
   }
 
+  @Test
+  void failingTest() {
+    assertTrue(false, "This test is designed to fail");
+  }
+
+
   private static void assertPercentage(double value) {
     assertTrue(value >= 0.0 && value <= 1.0,
       () -> "Expected " + value + " to be a percentage between 0.0 and 1.0");
