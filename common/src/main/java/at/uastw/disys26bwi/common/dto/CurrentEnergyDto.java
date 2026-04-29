@@ -1,6 +1,7 @@
 package at.uastw.disys26bwi.common.dto;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-public record CurrentEnergyDto(Date date, double communityDepleted, double gridPortion) {}
+public record CurrentEnergyDto(LocalDateTime date, double communityDepleted, double gridPortion) {
+}
 

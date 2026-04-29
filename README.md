@@ -1,10 +1,12 @@
 # DISY26
 
-A multi-module Java application consisting of a JavaFX user interface, Spring Boot REST API, and shared common module for data management.
+A multi-module Java application consisting of a JavaFX user interface, Spring Boot REST API, and shared common module
+for data management.
 
 ## Overview
 
 DISY26 is a distributed system project that demonstrates a modern multi-layered architecture with:
+
 - A **JavaFX desktop client** for user interactions
 - A **Spring Boot REST API** backend for business logic
 - A **Common module** for shared data structures and database access
@@ -12,6 +14,7 @@ DISY26 is a distributed system project that demonstrates a modern multi-layered 
 ## Project Modules
 
 ### UI Module
+
 A JavaFX-based user interface providing desktop application functionality for interacting with the API.
 
 - **Technology**: JavaFX, Maven
@@ -19,6 +22,7 @@ A JavaFX-based user interface providing desktop application functionality for in
 - **Location**: `./ui/`
 
 ### API Module
+
 A Spring Boot REST API providing backend services and business logic.
 
 - **Technology**: Spring Boot, Spring Data, Maven
@@ -27,6 +31,7 @@ A Spring Boot REST API providing backend services and business logic.
 - **Docker**: Dockerfile included for containerization
 
 ### Common Module
+
 Shared data structures, DTOs, and database access layer used by both UI and API modules.
 
 - **Technology**: Java, Maven
@@ -36,7 +41,8 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
 ## Getting Started
 
 ### Prerequisites
-- Java 21+ 
+
+- Java 21+
 - Maven 3.6+
 - Docker & Docker Compose (for running the database)
 
@@ -59,7 +65,8 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
    ```bash
    docker-compose up -d
    ```
-   This will start the entire backend stack, including the database and API server. The API will then be available at `http://localhost:8080`.
+   This will start the entire backend stack, including the database and API server. The API will then be available at
+   `http://localhost:8080`.
 
 2. **Start the UI Application**
    ```bash
@@ -83,3 +90,7 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
 - The project uses Maven as the build tool
 - Docker Compose is used for containerized services
 - Modules are interconnected through the common module for shared data structures
+
+## License
+
+MIT License. See `LICENSE` for details and contributor attribution.

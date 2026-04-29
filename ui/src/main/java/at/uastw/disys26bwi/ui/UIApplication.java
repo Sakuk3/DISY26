@@ -13,7 +13,7 @@ public class UIApplication extends Application {
   public void start(Stage stage) {
     BorderPane root = new BorderPane();
     root.setCenter(new Label("DISY26 UI"));
-    
+
     Scene scene = new Scene(root, 800, 600);
     stage.setTitle("DISY26 - Energy Management");
     stage.setScene(scene);

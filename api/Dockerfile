@@ -11,12 +11,14 @@ COPY pom.xml .
 
 # Copy all modules for multi-module build
 COPY common ./common
+COPY ui ./ui
 COPY api ./api
 
 RUN chmod +x mvnw
 
 # Build the reactor and the api module (with common as a reactor dependency)
-RUN ./mvnw -B -DskipTests package -pl api -am
+# The api module repackages itself during `package`, producing the executable jar.
+RUN ./mvnw -B -DskipTests -pl api -am package
 
 # Runtime image: small JRE
 FROM eclipse-temurin:21-jre
@@ -24,8 +26,8 @@ FROM eclipse-temurin:21-jre
 ARG JAVA_OPTS=""
 EXPOSE 8080
 
-# Copy the built jar from the builder stage. Use wildcard to avoid hardcoding name.
-COPY --from=builder /workspace/api/target/*.jar /app/app.jar
+# Copy the executable Spring Boot jar from the builder stage.
+COPY --from=builder /workspace/api/target/api-0.0.1-SNAPSHOT.jar /app/app.jar
 
 ENTRYPOINT ["sh", "-c", "exec java $JAVA_OPTS -jar /app/app.jar"]
 
