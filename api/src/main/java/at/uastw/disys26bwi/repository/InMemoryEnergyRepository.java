@@ -12,6 +12,10 @@ import org.slf4j.LoggerFactory;
 @Component
 public class InMemoryEnergyRepository implements EnergyRepository {
   private static final Logger logger = LoggerFactory.getLogger(InMemoryEnergyRepository.class);
+  private static final double COMMUNITY_USED_MIN = 1_000;
+  private static final double COMMUNITY_USED_MAX = 10_000;
+  private static final double COMMUNITY_USED_SPAN = COMMUNITY_USED_MAX - COMMUNITY_USED_MIN;
+  private static final int ROUND_DECIMAL_COUNT = 2;
   private final Random random;
 
   InMemoryEnergyRepository() {
@@ -33,7 +37,7 @@ public class InMemoryEnergyRepository implements EnergyRepository {
 
   public HistoricEnergyDto getHistoricEnergy(LocalDateTime start, LocalDateTime  end) {
     logger.debug("Generating historic energy data from {} to {}", start, end);
-    double communityUsed = this.round(1000 + random.nextDouble() * 9000);
+    double communityUsed = this.round(COMMUNITY_USED_MIN + random.nextDouble() * COMMUNITY_USED_SPAN);
     double communityProduced = this.round(random.nextDouble() * 2 * communityUsed);
     double gridUsed = this.round(Math.max(0, communityUsed  - communityProduced));
 
@@ -48,7 +52,7 @@ public class InMemoryEnergyRepository implements EnergyRepository {
 
 
   private double round(double value) {
-    double scale = Math.pow(10, 2);
+    double scale = Math.pow(10, ROUND_DECIMAL_COUNT);
     return Math.round(value * scale) / scale;
   }
 }
