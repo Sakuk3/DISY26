@@ -34,7 +34,7 @@ public class EnergyController {
     @FXML
     protected void onRefreshButtonClick() {
         try {
-            CurrentEnergyDto data = EnergyService.getCurrentEnergy();
+            CurrentEnergyDto data = energyService.getCurrentEnergy();
             communityPoolUsed.setText(String.format("%.2f %%", data.communityDepleted()));
             gridPortion.setText(String.format("%.2f %%", data.gridPortion()));
         } catch (Exception e) {
