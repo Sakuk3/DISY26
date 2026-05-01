@@ -19,7 +19,7 @@ public class EnergyController {
 
   EnergyController(EnergyRepository energyRepository) {
     this.energyRepository = energyRepository;
-    logger.info("EnergyController initialized");
+    logger.debug("EnergyController initialized");
   }
 
   @GetMapping("/current")
