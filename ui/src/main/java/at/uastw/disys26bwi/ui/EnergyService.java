@@ -15,7 +15,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 
 public class EnergyService {
-
     private static final String API_BASE_URL = "http://localhost:8080";
 
     private final HttpClient httpClient;
