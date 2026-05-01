@@ -17,15 +17,15 @@ import java.time.LocalDateTime;
 public class EnergyService {
     private static final String API_BASE_URL = "http://localhost:8080";
 
-    private static HttpClient httpClient;
-    private static ObjectMapper objectMapper = new ObjectMapper();
+    private final HttpClient httpClient;
+    private final ObjectMapper objectMapper;
 
     public EnergyService() {
-        httpClient = HttpClient.newHttpClient();
-        objectMapper = new ObjectMapper();
+        this.httpClient = HttpClient.newHttpClient();
+        this.objectMapper = new ObjectMapper();
     }
 
-    public static CurrentEnergyDto getCurrentEnergy() {
+    public CurrentEnergyDto getCurrentEnergy() {
         JsonNode json = getJson("/energy/current");
 
         return new CurrentEnergyDto(
@@ -50,7 +50,7 @@ public class EnergyService {
         );
     }
 
-    private static JsonNode getJson(String path) {
+    private JsonNode getJson(String path) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(API_BASE_URL + path))
