@@ -10,9 +10,10 @@ COPY api/.mvn .mvn
 COPY pom.xml .
 
 # Copy all modules for multi-module build
-COPY common ./common
+COPY api-spec ./api-spec
 COPY ui ./ui
 COPY api ./api
+COPY db-spec ./db-spec
 
 RUN chmod +x mvnw
 

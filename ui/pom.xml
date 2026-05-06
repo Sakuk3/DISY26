@@ -24,7 +24,7 @@
     <dependencies>
         <dependency>
             <groupId>at.uastw</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>api-spec</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

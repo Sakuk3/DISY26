@@ -1,7 +1,7 @@
 package at.uastw.disys26bwi.controller;
 
-import at.uastw.disys26bwi.common.dto.CurrentEnergyDto;
-import at.uastw.disys26bwi.common.dto.HistoricEnergyDto;
+import at.uastw.disys26bwi.apiSpec.dto.CurrentEnergyDto;
+import at.uastw.disys26bwi.apiSpec.dto.HistoricEnergyDto;
 import at.uastw.disys26bwi.repository.EnergyRepository;
 import at.uastw.disys26bwi.util.EnergyQueryValidator;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ public class EnergyController {
 
   EnergyController(EnergyRepository energyRepository) {
     this.energyRepository = energyRepository;
-    logger.debug("EnergyController initialized");
+    logger.debug("initialized");
   }
 
   @GetMapping("/current")

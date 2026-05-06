@@ -13,9 +13,10 @@
     <description>Monorepo parent POM for DISY26</description>
 
     <modules>
-        <module>common</module>
+        <module>api-spec</module>
         <module>ui</module>
         <module>api</module>
+        <module>db-spec</module>
     </modules>
 
     <properties>

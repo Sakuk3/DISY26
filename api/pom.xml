@@ -16,7 +16,12 @@
     <dependencies>
         <dependency>
             <groupId>at.uastw</groupId>
-            <artifactId>common</artifactId>
+            <artifactId>api-spec</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>at.uastw</groupId>
+            <artifactId>db-spec</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

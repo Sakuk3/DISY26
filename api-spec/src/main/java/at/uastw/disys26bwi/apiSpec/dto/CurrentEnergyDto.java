@@ -1,4 +1,4 @@
-package at.uastw.disys26bwi.common.dto;
+package at.uastw.disys26bwi.apiSpec.dto;
 
 import java.time.LocalDateTime;
 

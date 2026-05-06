@@ -12,9 +12,15 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>common</artifactId>
-    <name>common</name>
-    <description>Shared DTOs and utilities for DISY26</description>
+    <artifactId>api-spec</artifactId>
+    <name>api-spec</name>
+    <description>Shared DTOs for the DISY26 rest api</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

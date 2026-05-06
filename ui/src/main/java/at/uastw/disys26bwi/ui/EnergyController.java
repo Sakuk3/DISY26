@@ -1,7 +1,7 @@
 package at.uastw.disys26bwi.ui;
 
-import at.uastw.disys26bwi.common.dto.CurrentEnergyDto;
-import at.uastw.disys26bwi.common.dto.HistoricEnergyDto;
+import at.uastw.disys26bwi.apiSpec.dto.CurrentEnergyDto;
+import at.uastw.disys26bwi.apiSpec.dto.HistoricEnergyDto;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;

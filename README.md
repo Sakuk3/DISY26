@@ -9,7 +9,7 @@ DISY26 is a distributed system project that demonstrates a modern multi-layered 
 
 - A **JavaFX desktop client** for user interactions
 - A **Spring Boot REST API** backend for business logic
-- A **Common module** for shared data structures and database access
+- A **ApiSpec module** for shared data structures and database access
 
 ## Project Modules
 
@@ -30,13 +30,13 @@ A Spring Boot REST API providing backend services and business logic.
 - **Location**: `./api/`
 - **Docker**: Dockerfile included for containerization
 
-### Common Module
+### ApiSpec Module
 
-Shared data structures, DTOs, and database access layer used by both UI and API modules.
+DTOs for the Rest API.
 
 - **Technology**: Java, Maven
-- **Purpose**: Shared utilities, models, and data access objects
-- **Location**: `./common/`
+- **Purpose**: Dtos for the Rest API
+- **Location**: `./api-spec/`
 
 ## Getting Started
 
@@ -89,7 +89,6 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
 
 - The project uses Maven as the build tool
 - Docker Compose is used for containerized services
-- Modules are interconnected through the common module for shared data structures
 
 ## License
 
