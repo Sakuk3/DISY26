@@ -27,6 +27,7 @@ services:
     networks:
       - postgres-network
     volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - postgres-data:/var/lib/postgresql/
 
   pgadmin:
@@ -47,6 +48,8 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    env_file:
+      - .env
 
 networks:
   postgres-network:
