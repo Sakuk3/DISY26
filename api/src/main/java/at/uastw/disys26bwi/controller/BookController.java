@@ -19,28 +19,32 @@ import java.util.Optional;
 public class BookController {
 
   private static final Logger logger = LoggerFactory.getLogger(BookController.class);
-  private static final Sort DEFAULT_SORT = Sort.by(Sort.Direction.ASC, "id");
   private final BookRepository bookRepository;
-  private final BookMapper bookMapper = new BookMapper();
+  private final BookMapper bookMapper;
 
-  BookController(BookRepository bookRepository) {
+  BookController(BookRepository bookRepository, BookMapper bookMapper) {
     this.bookRepository = bookRepository;
+    this.bookMapper = bookMapper;
     logger.debug("initialized");
   }
 
   @GetMapping("/")
-  public List<BookDto> getAllBooks() {
+  public List<BookDto> getAllBooks(@RequestParam(defaultValue = "asc") SortDirection direction) {
     logger.debug("get all books");
-    return this.bookMapper.mapList(this.bookRepository.findAll(DEFAULT_SORT));
+    Sort sort = Sort.by(direction.toSpringDirection(), "title");
+    return this.bookMapper.mapList(this.bookRepository.findAll(sort));
   }
 
   @GetMapping(value = "/", params = "title")
-  public List<BookDto> getAllBooks(@RequestParam String title) {
+  public List<BookDto> getAllBooks(@RequestParam String title,
+                                   @RequestParam(defaultValue = "asc") SortDirection direction) {
     logger.debug("get all books by title {}", title);
     if (title.isBlank()) {
-      return this.bookMapper.mapList(this.bookRepository.findAll(DEFAULT_SORT));
+      return this.getAllBooks(direction);
+    } else {
+      Sort sort = Sort.by(direction.toSpringDirection(), "title");
+      return this.bookMapper.mapList(this.bookRepository.findBookEntitiesByTitleContainingIgnoreCase(title, sort));
     }
-    return this.bookMapper.mapList(this.bookRepository.findBookEntitiesByTitleContainingIgnoreCase(title, DEFAULT_SORT));
   }
 
   @GetMapping("/{id}")

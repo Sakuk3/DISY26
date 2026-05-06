@@ -2,7 +2,9 @@ package at.uastw.disys26bwi.mapper;
 
 import at.uastw.disys26bwi.apiSpec.dto.BookDto;
 import at.uastw.disys26bwi.repository.BookEntity;
+import org.springframework.stereotype.Service;
 
+@Service
 public class BookMapper extends AbstractMapper<BookEntity, BookDto> {
 
   @Override
