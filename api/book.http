@@ -1,0 +1,38 @@
+### BookController requests for IntelliJ HTTP Client
+@baseUrl = http://localhost:8080
+
+### Get all books
+GET {{baseUrl}}/books/
+Accept: application/json
+
+### Search books by title (contains)
+GET {{baseUrl}}/books/?title=20
+Accept: application/json
+
+### Get book by id
+GET {{baseUrl}}/books/1
+Accept: application/json
+
+### Create book
+POST {{baseUrl}}/books/
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "The Pragmatic Programmer",
+  "genre": "Non-fiction"
+}
+
+### Update book
+PUT {{baseUrl}}/books/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "The Pragmatic Programmer (20th Anniversary)",
+  "genre": "Non-fiction"
+}
+
+### Delete book
+DELETE {{baseUrl}}/books/2
+Accept: application/json
