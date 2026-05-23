@@ -26,7 +26,7 @@ public class HourlyUsageEntity {
   @Column(name = "grid_used_kwh")
   private java.math.BigDecimal gridUsedKwh;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private java.time.OffsetDateTime createdAt;
 
   @Column(name = "updated_at")
@@ -53,7 +53,7 @@ public class HourlyUsageEntity {
   }
 
   public void setCommunityProducedKwh(java.math.BigDecimal communityProducedKwh) {
-    this.communityProducedKwh = communityProducedKwh;
+    this.communityProducedKwh = communityProducedKwh.setScale(3, java.math.RoundingMode.HALF_UP);
   }
 
   public java.math.BigDecimal getCommunityUsedKwh() {
@@ -61,7 +61,7 @@ public class HourlyUsageEntity {
   }
 
   public void setCommunityUsedKwh(java.math.BigDecimal communityUsedKwh) {
-    this.communityUsedKwh = communityUsedKwh;
+    this.communityUsedKwh = communityUsedKwh.setScale(3, java.math.RoundingMode.HALF_UP);
   }
 
   public java.math.BigDecimal getGridUsedKwh() {
@@ -69,7 +69,7 @@ public class HourlyUsageEntity {
   }
 
   public void setGridUsedKwh(java.math.BigDecimal gridUsedKwh) {
-    this.gridUsedKwh = gridUsedKwh;
+    this.gridUsedKwh = gridUsedKwh.setScale(3, java.math.RoundingMode.HALF_UP);
   }
 
   public java.time.OffsetDateTime getCreatedAt() {
