@@ -41,6 +41,6 @@ public class EnergyConsumptionService {
         final String datetime = java.time.LocalDateTime.now().toString();
         final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, datetime);
         logger.info("Sending energy consumption data: {}", data);
-        this.rabbit.convertAndSend(QueueNames.ENERGY_CONSUMPTION_QUEUE, data);
+        this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
     }
 }

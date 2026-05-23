@@ -8,8 +8,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="db-spec" />
         <module name="ui" />
+        <module name="energy-usage" />
         <module name="api-spec" />
         <module name="api" />
+        <module name="energy-update" />
         <module name="mq-spec" />
         <module name="energy-consumer" />
         <module name="energy-producer" />
@@ -17,6 +19,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="common" target="21" />
+      <module name="energy-usage-service" target="21" />
       <module name="javafx-app" target="21" />
       <module name="springboot-app" target="21" />
     </bytecodeTargetLevel>
@@ -28,6 +31,9 @@
       <module name="db-spec" options="-parameters" />
       <module name="energy-consumer" options="-parameters" />
       <module name="energy-producer" options="-parameters" />
+      <module name="energy-update" options="-parameters" />
+      <module name="energy-usage" options="-parameters" />
+      <module name="energy-usage-service" options="-parameters" />
       <module name="mq-spec" options="-parameters" />
       <module name="springboot-app" options="-parameters" />
       <module name="ui" options="-parameters" />

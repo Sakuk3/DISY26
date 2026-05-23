@@ -20,6 +20,8 @@
         <module>mq-spec</module>
         <module>energy-producer</module>
         <module>energy-consumer</module>
+        <module>energy-usage</module>
+        <module>energy-update</module>
     </modules>
 
     <properties>

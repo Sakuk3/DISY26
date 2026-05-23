@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Bean;import org.springframework.sc
 @EnableScheduling
 public class Disys26bwiApplication {
   @Bean
-  public Queue inputQueue() {
-    return new Queue(QueueNames.ENERGY_PRODUCTION_QUEUE, true);
+  public Queue energyEventsQueue() {
+    return new Queue(QueueNames.ENERGY_EVENTS_QUEUE, true);
   }
 
   public static void main(String[] args) {

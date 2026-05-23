@@ -14,6 +14,11 @@ public class Disys26bwiApplication {
     return new Queue(QueueNames.ENERGY_EVENTS_QUEUE, true);
   }
 
+  @Bean
+  public Queue energyUsageUpdateQueue() {
+    return new Queue(QueueNames.USAGE_UPDATE_QUEUE, true);
+  }
+
   public static void main(String[] args) {
     SpringApplication.run(Disys26bwiApplication.class, args);
   }

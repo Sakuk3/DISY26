@@ -11,6 +11,10 @@
     <file url="file://$PROJECT_DIR$/energy-consumer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/energy-producer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/energy-producer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/energy-update/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/energy-update/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/energy-usage/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/energy-usage/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/javafx-app/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/javafx-app/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/mq-spec/src/main/java" charset="UTF-8" />

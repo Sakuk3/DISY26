@@ -9,14 +9,19 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>energy-consumer</artifactId>
-    <name>Energy consumer</name>
-    <description>Consumes energy and sends its consumption numbers</description>
+    <artifactId>energy-usage</artifactId>
+    <name>Energy usage service</name>
+    <description>Monitors the energy usage of an energy community</description>
 
     <dependencies>
         <dependency>
             <groupId>at.uastw</groupId>
             <artifactId>mq-spec</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>at.uastw</groupId>
+            <artifactId>db-spec</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <!--For RabbitListener and RabbitTemplate-->
