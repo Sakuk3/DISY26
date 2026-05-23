@@ -1,0 +1,46 @@
+package at.uastw.disys26bwi.service;
+
+import at.uastw.disys26bwi.mqSpec.constants.Association;
+import at.uastw.disys26bwi.mqSpec.constants.NodeType;
+import at.uastw.disys26bwi.mqSpec.constants.QueueNames;
+import at.uastw.disys26bwi.mqSpec.dto.EnergyNodeMessageDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
+
+import java.util.concurrent.ThreadLocalRandom;
+
+@Service
+public class EnergyConsumptionService {
+    private static final Logger logger = LoggerFactory.getLogger(EnergyConsumptionService.class);
+    private static final long INTERVAL = 5000; // 5 seconds
+    private static final long MIN_INITIAL_DELAY = 1000; // 1 second
+    private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
+    public static final long INITIAL_DELAY =
+      ThreadLocalRandom.current()
+        .nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
+
+    private static final NodeType NODE_TYPE = NodeType.CONSUMER;
+    private static final Association ASSOCIATION = Association.COMMUNITY;
+
+    private final RabbitTemplate rabbit;
+
+    public EnergyConsumptionService(RabbitTemplate rabbit) {
+        this.rabbit = rabbit;
+    }
+
+    @Scheduled(
+      fixedRate = INTERVAL,
+      initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyConsumptionService).INITIAL_DELAY}"
+    )
+    public void sendEnergyProductionData() {
+        // TODO: should be based on the time of day
+        final double kwh = ThreadLocalRandom.current().nextDouble(0.1, 5.0); // Simulate energy consumption between 0.1 and 5 kWh
+        final String datetime = java.time.LocalDateTime.now().toString();
+        final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, datetime);
+        logger.info("Sending energy consumption data: {}", data);
+        this.rabbit.convertAndSend(QueueNames.ENERGY_CONSUMPTION_QUEUE, data);
+    }
+}

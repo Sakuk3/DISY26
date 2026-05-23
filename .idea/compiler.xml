@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="db-spec" />
-        <module name="api" />
         <module name="ui" />
         <module name="api-spec" />
+        <module name="api" />
         <module name="mq-spec" />
+        <module name="energy-consumer" />
+        <module name="energy-producer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +26,8 @@
       <module name="api" options="-parameters" />
       <module name="api-spec" options="-parameters" />
       <module name="db-spec" options="-parameters" />
+      <module name="energy-consumer" options="-parameters" />
+      <module name="energy-producer" options="-parameters" />
       <module name="mq-spec" options="-parameters" />
       <module name="springboot-app" options="-parameters" />
       <module name="ui" options="-parameters" />

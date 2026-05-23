@@ -18,6 +18,8 @@
         <module>api</module>
         <module>db-spec</module>
         <module>mq-spec</module>
+        <module>energy-producer</module>
+        <module>energy-consumer</module>
     </modules>
 
     <properties>

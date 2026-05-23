@@ -9,24 +9,20 @@
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>api</artifactId>
-    <name>api</name>
-    <description>SpringBoot rest API for DISY26</description>
+    <artifactId>energy-producer</artifactId>
+    <name>energy-producer</name>
+    <description>Energy Producer</description>
 
     <dependencies>
         <dependency>
             <groupId>at.uastw</groupId>
-            <artifactId>api-spec</artifactId>
+            <artifactId>mq-spec</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>at.uastw</groupId>
-            <artifactId>db-spec</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+        <!--For RabbitListener and RabbitTemplate-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webmvc</artifactId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
