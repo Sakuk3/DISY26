@@ -18,6 +18,56 @@ services:
       timeout: 10s
       retries: 3
 
+  energy-consumer:
+    build:
+      context: .
+      dockerfile: ./energy-consumer/Dockerfile
+    image: energy-consumer:latest
+    depends_on:
+      - rabbitmq
+    env_file:
+      - .env
+    restart: unless-stopped
+    deploy:
+      replicas: 3
+
+  energy-producer:
+    build:
+      context: .
+      dockerfile: ./energy-producer/Dockerfile
+    image: energy-producer:latest
+    depends_on:
+      - rabbitmq
+    env_file:
+      - .env
+    restart: unless-stopped
+    deploy:
+      replicas: 3
+
+  energy-update:
+    build:
+      context: .
+      dockerfile: ./energy-update/Dockerfile
+    image: energy-update:latest
+    depends_on:
+      - rabbitmq
+      - database
+    env_file:
+      - .env
+    restart: unless-stopped
+
+  energy-usage:
+    build:
+      context: .
+      dockerfile: ./energy-usage/Dockerfile
+    image: energy-usage:latest
+    depends_on:
+      - rabbitmq
+      - database
+    env_file:
+      - .env
+    restart: unless-stopped
+
   database:
     image: "postgres:18.3"
     ports:
@@ -48,11 +98,16 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - messaging-network
     env_file:
       - .env
 
 networks:
   postgres-network:
+    driver: bridge
+
+  messaging-network:
     driver: bridge
 
 volumes:
