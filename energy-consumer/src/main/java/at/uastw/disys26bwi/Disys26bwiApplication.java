@@ -1,8 +1,8 @@
 package at.uastw.disys26bwi;
 
 import at.uastw.disys26bwi.mqSpec.constants.QueueNames;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
@@ -24,13 +24,13 @@ public class Disys26bwiApplication {
 
   @Bean
   public RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory) {
-      final var rabbitTemplate = new RabbitTemplate(connectionFactory);
-      rabbitTemplate.setMessageConverter(producerJackson2JsonMessageConverter());
-      return rabbitTemplate;
+    final var rabbitTemplate = new RabbitTemplate(connectionFactory);
+    rabbitTemplate.setMessageConverter(producerJackson2JsonMessageConverter());
+    return rabbitTemplate;
   }
 
   @Bean
-  public Jackson2JsonMessageConverter producerJackson2JsonMessageConverter  () {
-      return new Jackson2JsonMessageConverter ();
+  public Jackson2JsonMessageConverter producerJackson2JsonMessageConverter() {
+    return new Jackson2JsonMessageConverter();
   }
 }

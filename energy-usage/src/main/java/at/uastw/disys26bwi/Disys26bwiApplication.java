@@ -35,7 +35,7 @@ public class Disys26bwiApplication {
   }
 
   @Bean
-  public Jackson2JsonMessageConverter producerJackson2JsonMessageConverter  () {
-    return new Jackson2JsonMessageConverter ();
+  public Jackson2JsonMessageConverter producerJackson2JsonMessageConverter() {
+    return new Jackson2JsonMessageConverter();
   }
 }

@@ -4,7 +4,6 @@ import at.uastw.disys26bwi.mqSpec.constants.Association;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public record UsageUpdateMessageDto(
   Association association,

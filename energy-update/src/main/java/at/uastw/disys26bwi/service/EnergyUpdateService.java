@@ -24,6 +24,7 @@ public class EnergyUpdateService {
 
   private final HourlyPercentagesRepository hourlyPercentagesRepository;
   private final AssociationRepository associationRepository;
+
   EnergyUpdateService(HourlyPercentagesRepository hourlyPercentagesRepository, AssociationRepository associationRepository) {
     this.hourlyPercentagesRepository = hourlyPercentagesRepository;
     this.associationRepository = associationRepository;
@@ -49,7 +50,7 @@ public class EnergyUpdateService {
     entity.setSelfConsumptionPct(communityDepletedPct);
     entity.setGridDependencyPct(gridPortionPct);
     entity.setUpdatedAt(OffsetDateTime.now());
-   this.hourlyPercentagesRepository.save(entity);
+    this.hourlyPercentagesRepository.save(entity);
   }
 
   private AssociationEntity getOrCreateAssociation(Association association) {

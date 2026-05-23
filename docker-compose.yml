@@ -29,7 +29,7 @@ services:
     depends_on:
       - rabbitmq
     networks:
-        - messaging-network
+      - messaging-network
     env_file:
       - .env
     restart: unless-stopped
