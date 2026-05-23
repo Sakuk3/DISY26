@@ -12,7 +12,7 @@ public class EnergyEventEntity {
   @Column(name = "association_id")
   private long associationId;
 
-  @Column(name = "event_type")
+  @Column(name = "event_type", columnDefinition = "energyEventTypes")
   private String eventType;
 
   private java.math.BigDecimal kwh;
@@ -20,7 +20,7 @@ public class EnergyEventEntity {
   @Column(name = "occurred_at")
   private java.time.OffsetDateTime occurredAt;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private java.time.OffsetDateTime createdAt;
 
   public long getId() {

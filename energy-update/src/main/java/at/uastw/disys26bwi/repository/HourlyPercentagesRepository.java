@@ -9,11 +9,4 @@ import java.util.List;
 
 public interface HourlyPercentagesRepository
   extends JpaRepository<HourlyPercentagesEntity, HourlyPercentagesId> {
-
-  List<HourlyPercentagesEntity> findByAssociationId(long associationId);
-
-  List<HourlyPercentagesEntity> findByHourBucketBetween(
-    OffsetDateTime from,
-    OffsetDateTime to
-  );
 }

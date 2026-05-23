@@ -23,7 +23,7 @@ public class HourlyPercentagesEntity {
   @Column(name = "grid_dependency_pct")
   private java.math.BigDecimal gridDependencyPct;
 
-  @Column(name = "created_at")
+  @Column(name = "created_at", insertable = false, updatable = false)
   private java.time.OffsetDateTime createdAt;
 
   @Column(name = "updated_at")

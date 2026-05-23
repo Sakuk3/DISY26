@@ -10,6 +10,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -37,9 +40,8 @@ public class EnergyConsumptionService {
   )
   public void sendEnergyProductionData() {
     // TODO: should be based on the time of day
-    final double kwh = ThreadLocalRandom.current().nextDouble(0.1, 5.0); // Simulate energy consumption between 0.1 and 5 kWh
-    final String datetime = java.time.LocalDateTime.now().toString();
-    final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, datetime);
+    final BigDecimal kwh = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(0.1, 5.0));
+    final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, Instant.now().toString());
     logger.info("Sending energy consumption data: {}", data);
     this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
   }

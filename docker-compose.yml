@@ -1,4 +1,4 @@
-name: DISY26GO
+name: DISY26BWI
 services:
   api:
     build:
@@ -11,6 +11,9 @@ services:
       - database
     env_file:
       - .env
+    networks:
+      - messaging-network
+      - database-network
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/health" ]
@@ -25,6 +28,8 @@ services:
     image: energy-consumer:latest
     depends_on:
       - rabbitmq
+    networks:
+        - messaging-network
     env_file:
       - .env
     restart: unless-stopped
@@ -38,6 +43,8 @@ services:
     image: energy-producer:latest
     depends_on:
       - rabbitmq
+    networks:
+      - messaging-network
     env_file:
       - .env
     restart: unless-stopped
@@ -52,6 +59,9 @@ services:
     depends_on:
       - rabbitmq
       - database
+    networks:
+      - messaging-network
+      - database-network
     env_file:
       - .env
     restart: unless-stopped
@@ -64,6 +74,9 @@ services:
     depends_on:
       - rabbitmq
       - database
+    networks:
+      - messaging-network
+      - database-network
     env_file:
       - .env
     restart: unless-stopped
@@ -75,10 +88,10 @@ services:
     env_file:
       - .env
     networks:
-      - postgres-network
+      - database-network
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
-      - postgres-data:/var/lib/postgresql/
+      - database-data:/var/lib/postgresql/
 
   pgadmin:
     image: dpage/pgadmin4
@@ -89,7 +102,7 @@ services:
     depends_on:
       - database
     networks:
-      - postgres-network
+      - database-network
     volumes:
       - pgadmin-data:/var/lib/pgadmin
 
@@ -104,7 +117,7 @@ services:
       - .env
 
 networks:
-  postgres-network:
+  database-network:
     driver: bridge
 
   messaging-network:
@@ -112,4 +125,4 @@ networks:
 
 volumes:
   pgadmin-data:
-  postgres-data:
+  database-data:

@@ -15,6 +15,12 @@
     <artifactId>mq-spec</artifactId>
     <name>mq-spec</name>
     <description>Shared definitions for the message queue</description>
+    <dependencies>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>

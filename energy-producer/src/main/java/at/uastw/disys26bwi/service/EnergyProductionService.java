@@ -11,6 +11,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
@@ -39,9 +42,8 @@ public class EnergyProductionService {
     initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyProductionService).INITIAL_DELAY}"
   )
   public void sendEnergyProductionData() {
-    final double kwh = weatherController.getSunlightIntensity() * 0.001; // Simulate energy production based on sunlight intensity
-    final String datetime = java.time.LocalDateTime.now().toString();
-    final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, datetime);
+    final BigDecimal kwh = BigDecimal.valueOf(weatherController.getSunlightIntensity() * 0.001);
+    final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, Instant.now().toString());
     logger.info("Sending energy production data: {}", data);
     this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
   }
