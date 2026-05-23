@@ -17,6 +17,7 @@
         <module>ui</module>
         <module>api</module>
         <module>db-spec</module>
+        <module>mq-spec</module>
     </modules>
 
     <properties>
