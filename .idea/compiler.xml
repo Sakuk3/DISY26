@@ -10,6 +10,7 @@
         <module name="api" />
         <module name="ui" />
         <module name="api-spec" />
+        <module name="mq-spec" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -23,6 +24,7 @@
       <module name="api" options="-parameters" />
       <module name="api-spec" options="-parameters" />
       <module name="db-spec" options="-parameters" />
+      <module name="mq-spec" options="-parameters" />
       <module name="springboot-app" options="-parameters" />
       <module name="ui" options="-parameters" />
     </option>

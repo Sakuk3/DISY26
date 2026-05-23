@@ -14,6 +14,7 @@ COPY api-spec ./api-spec
 COPY ui ./ui
 COPY api ./api
 COPY db-spec ./db-spec
+COPY mq-spec ./mq-spec
 
 RUN chmod +x mvnw
 
