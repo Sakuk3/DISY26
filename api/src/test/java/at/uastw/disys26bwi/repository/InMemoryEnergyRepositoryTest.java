@@ -7,14 +7,27 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryEnergyRepositoryTest {
   private static final long CURRENT_ENERGY_SEED = 12345L;
   private static final long HISTORIC_ENERGY_SEED = 98765L;
   private static final int HISTORIC_RANGE_COUNT = 10;
+
+  private static void assertHistoricEnergy(HistoricEnergyDto dto, LocalDateTime start, LocalDateTime end) {
+    assertEquals(start, dto.startDate());
+    assertEquals(end, dto.endDate());
+    assertTrue(dto.communityUsed() >= 0, "Community usage must be non-negative");
+    assertTrue(dto.communityProduced() >= 0, "Community production must be non-negative");
+    assertTrue(dto.gridUsed() >= 0, "Grid usage must be non-negative");
+    assertEquals(Math.max(0, dto.communityUsed() - dto.communityProduced()), dto.gridUsed(), 0.01,
+      "Grid usage must equal the community deficit");
+  }
+
+  private static void assertPercentage(double value) {
+    assertTrue(value >= 0.0 && value <= 1.0,
+      () -> "Expected " + value + " to be a percentage between 0.0 and 1.0");
+  }
 
   @Test
   void getCurrentEnergyReturnsValuesInExpectedRange() {
@@ -40,20 +53,5 @@ class InMemoryEnergyRepositoryTest {
 
       assertHistoricEnergy(dto, start, end);
     }
-  }
-
-  private static void assertHistoricEnergy(HistoricEnergyDto dto, LocalDateTime start, LocalDateTime end) {
-    assertEquals(start, dto.startDate());
-    assertEquals(end, dto.endDate());
-    assertTrue(dto.communityUsed() >= 0, "Community usage must be non-negative");
-    assertTrue(dto.communityProduced() >= 0, "Community production must be non-negative");
-    assertTrue(dto.gridUsed() >= 0, "Grid usage must be non-negative");
-    assertEquals(Math.max(0, dto.communityUsed() - dto.communityProduced()), dto.gridUsed(), 0.01,
-      "Grid usage must equal the community deficit");
-  }
-
-  private static void assertPercentage(double value) {
-    assertTrue(value >= 0.0 && value <= 1.0,
-      () -> "Expected " + value + " to be a percentage between 0.0 and 1.0");
   }
 }

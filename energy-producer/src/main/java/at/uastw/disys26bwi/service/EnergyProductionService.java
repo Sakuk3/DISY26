@@ -15,34 +15,34 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class EnergyProductionService {
-    private static final Logger logger = LoggerFactory.getLogger(EnergyProductionService.class);
-    private static final long INTERVAL = 5000; // 5 seconds
-    private static final long MIN_INITIAL_DELAY = 1000; // 1 second
-    private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
-    public static final long INITIAL_DELAY =
-      ThreadLocalRandom.current()
-        .nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
+  private static final Logger logger = LoggerFactory.getLogger(EnergyProductionService.class);
+  private static final long INTERVAL = 5000; // 5 seconds
+  private static final long MIN_INITIAL_DELAY = 1000; // 1 second
+  private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
+  public static final long INITIAL_DELAY =
+    ThreadLocalRandom.current()
+      .nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
 
-    private static final NodeType NODE_TYPE = NodeType.PRODUCER;
-    private static final Association ASSOCIATION = Association.COMMUNITY;
+  private static final NodeType NODE_TYPE = NodeType.PRODUCER;
+  private static final Association ASSOCIATION = Association.COMMUNITY;
 
-    private final RabbitTemplate rabbit;
-    private final WeatherController weatherController;
+  private final RabbitTemplate rabbit;
+  private final WeatherController weatherController;
 
-    public EnergyProductionService(RabbitTemplate rabbit, WeatherController weatherController) {
-        this.rabbit = rabbit;
-        this.weatherController = weatherController;
-    }
+  public EnergyProductionService(RabbitTemplate rabbit, WeatherController weatherController) {
+    this.rabbit = rabbit;
+    this.weatherController = weatherController;
+  }
 
-    @Scheduled(
-      fixedRate = INTERVAL,
-      initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyProductionService).INITIAL_DELAY}"
-    )
-    public void sendEnergyProductionData() {
-        final double kwh = weatherController.getSunlightIntensity() * 0.001; // Simulate energy production based on sunlight intensity
-        final String datetime = java.time.LocalDateTime.now().toString();
-        final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, datetime);
-        logger.info("Sending energy production data: {}", data);
-        this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
-    }
+  @Scheduled(
+    fixedRate = INTERVAL,
+    initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyProductionService).INITIAL_DELAY}"
+  )
+  public void sendEnergyProductionData() {
+    final double kwh = weatherController.getSunlightIntensity() * 0.001; // Simulate energy production based on sunlight intensity
+    final String datetime = java.time.LocalDateTime.now().toString();
+    final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, datetime);
+    logger.info("Sending energy production data: {}", data);
+    this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
+  }
 }

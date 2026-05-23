@@ -1,6 +1,9 @@
 package at.uastw.disys26bwi.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
 
 @Entity(name = "hourly_usage")
 @IdClass(HourlyUsageId.class)

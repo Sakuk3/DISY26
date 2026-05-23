@@ -1,4 +1,5 @@
 package at.uastw.disys26bwi.mqSpec.dto;
+
 import at.uastw.disys26bwi.mqSpec.constants.Association;
 import at.uastw.disys26bwi.mqSpec.constants.NodeType;
 
@@ -9,4 +10,5 @@ public record EnergyNodeMessageDto(
   Association association,
   double kwh,
   String datetime
-) implements Serializable{}
+) implements Serializable {
+}

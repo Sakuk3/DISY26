@@ -5,4 +5,5 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public record BookDto(
   @JsonProperty(access = JsonProperty.Access.READ_ONLY) Integer id,
   String title,
-  String genre) {}
+  String genre) {
+}

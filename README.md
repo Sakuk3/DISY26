@@ -69,10 +69,10 @@ DTOs for the Rest API.
    `http://localhost:8080`.
 
    **Dashboards**
-   - pgAdmin: `http://localhost:15433/`
-     - Login uses `PGADMIN_DEFAULT_EMAIL` / `PGADMIN_DEFAULT_PASSWORD` from `.env`.
-   - RabbitMQ management: `http://localhost:15672/`
-     - Login uses `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS` from `.env`.
+    - pgAdmin: `http://localhost:15433/`
+        - Login uses `PGADMIN_DEFAULT_EMAIL` / `PGADMIN_DEFAULT_PASSWORD` from `.env`.
+    - RabbitMQ management: `http://localhost:15672/`
+        - Login uses `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS` from `.env`.
 
 2. **Start the UI Application**
    ```bash
@@ -83,7 +83,8 @@ DTOs for the Rest API.
 
 ## Configuration
 
-- **Database Schema/User**: `POSTGRES_DB`, `APP_DB_SCHEMA`, `APP_DB_USER`, `APP_DB_PASSWORD` in `.env` (used by `db/init.sql` and API datasource)
+- **Database Schema/User**: `POSTGRES_DB`, `APP_DB_SCHEMA`, `APP_DB_USER`, `APP_DB_PASSWORD` in `.env` (used by
+  `db/init.sql` and API datasource)
 - **API Configuration**: See `api/src/main/resources/application.properties`
 - **pgAdmin Credentials**: Set `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD` in `.env`
 - **RabbitMQ Management Credentials**: Set `RABBITMQ_DEFAULT_USER` and `RABBITMQ_DEFAULT_PASS` in `.env`

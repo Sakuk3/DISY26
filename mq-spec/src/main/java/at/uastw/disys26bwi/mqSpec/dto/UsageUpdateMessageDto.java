@@ -7,4 +7,5 @@ import java.io.Serializable;
 public record UsageUpdateMessageDto(
   Association association,
   String datetime
-) implements Serializable {}
+) implements Serializable {
+}
