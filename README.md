@@ -9,7 +9,7 @@ DISY26 is a distributed system project that demonstrates a modern multi-layered 
 
 - A **JavaFX desktop client** for user interactions
 - A **Spring Boot REST API** backend for business logic
-- A **Common module** for shared data structures and database access
+- A **ApiSpec module** for shared data structures and database access
 
 ## Project Modules
 
@@ -30,13 +30,13 @@ A Spring Boot REST API providing backend services and business logic.
 - **Location**: `./api/`
 - **Docker**: Dockerfile included for containerization
 
-### Common Module
+### ApiSpec Module
 
-Shared data structures, DTOs, and database access layer used by both UI and API modules.
+DTOs for the Rest API.
 
 - **Technology**: Java, Maven
-- **Purpose**: Shared utilities, models, and data access objects
-- **Location**: `./common/`
+- **Purpose**: Dtos for the Rest API
+- **Location**: `./api-spec/`
 
 ## Getting Started
 
@@ -68,6 +68,12 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
    This will start the entire backend stack, including the database and API server. The API will then be available at
    `http://localhost:8080`.
 
+   **Dashboards**
+    - pgAdmin: `http://localhost:15433/`
+        - Login uses `PGADMIN_DEFAULT_EMAIL` / `PGADMIN_DEFAULT_PASSWORD` from `.env`.
+    - RabbitMQ management: `http://localhost:15672/`
+        - Login uses `RABBITMQ_DEFAULT_USER` / `RABBITMQ_DEFAULT_PASS` from `.env`.
+
 2. **Start the UI Application**
    ```bash
    cd ui
@@ -77,7 +83,11 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
 
 ## Configuration
 
+- **Database Schema/User**: `POSTGRES_DB`, `APP_DB_SCHEMA`, `APP_DB_USER`, `APP_DB_PASSWORD` in `.env` (used by
+  `db/init.sql` and API datasource)
 - **API Configuration**: See `api/src/main/resources/application.properties`
+- **pgAdmin Credentials**: Set `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD` in `.env`
+- **RabbitMQ Management Credentials**: Set `RABBITMQ_DEFAULT_USER` and `RABBITMQ_DEFAULT_PASS` in `.env`
 
 ## Contributors
 
@@ -89,7 +99,6 @@ Shared data structures, DTOs, and database access layer used by both UI and API 
 
 - The project uses Maven as the build tool
 - Docker Compose is used for containerized services
-- Modules are interconnected through the common module for shared data structures
 
 ## License
 

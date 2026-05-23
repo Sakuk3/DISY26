@@ -1,14 +1,13 @@
 package at.uastw.disys26bwi.repository;
 
-import at.uastw.disys26bwi.common.dto.CurrentEnergyDto;
-import at.uastw.disys26bwi.common.dto.HistoricEnergyDto;
+import at.uastw.disys26bwi.apiSpec.dto.CurrentEnergyDto;
+import at.uastw.disys26bwi.apiSpec.dto.HistoricEnergyDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Random;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component
 public class InMemoryEnergyRepository implements EnergyRepository {

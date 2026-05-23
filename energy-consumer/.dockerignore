@@ -1,0 +1,14 @@
+target
+.git
+.gitignore
+.idea
+*.iml
+local.properties
+node_modules
+dist
+build
+**/target
+/.mvn/wrapper/maven-wrapper.jar
+README.md
+Dockerfile
+

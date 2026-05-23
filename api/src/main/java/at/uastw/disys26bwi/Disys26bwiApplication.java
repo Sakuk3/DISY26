@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class Disys26bwiApplication {
+
   public static void main(String[] args) {
     SpringApplication.run(Disys26bwiApplication.class, args);
   }

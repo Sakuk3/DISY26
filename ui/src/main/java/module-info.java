@@ -6,7 +6,7 @@ module at.uastw.disys26bwi.ui {
   requires com.fasterxml.jackson.databind;
   requires com.fasterxml.jackson.core;
   requires com.fasterxml.jackson.annotation;
-  requires at.uastw.disys26bwi.common;
+  requires at.uastw.disys26bwi.apiSpec;
 
 
   opens at.uastw.disys26bwi.ui to javafx.fxml;
