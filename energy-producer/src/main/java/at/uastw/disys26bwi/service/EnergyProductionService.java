@@ -41,7 +41,7 @@ public class EnergyProductionService {
     initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyProductionService).INITIAL_DELAY}"
   )
   public void sendEnergyProductionData() {
-    final BigDecimal kwh = BigDecimal.valueOf(weatherController.getSunlightIntensity() * 0.001);
+    final BigDecimal kwh = BigDecimal.valueOf(weatherController.getSunlightIntensity());
     final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, Instant.now().toString());
     logger.info("Sending energy production data: {}", data);
     this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
