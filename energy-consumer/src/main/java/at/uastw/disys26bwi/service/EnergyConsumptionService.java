@@ -12,36 +12,37 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class EnergyConsumptionService {
-  private static final Logger logger = LoggerFactory.getLogger(EnergyConsumptionService.class);
-  private static final long INTERVAL = 5000; // 5 seconds
-  private static final long MIN_INITIAL_DELAY = 1000; // 1 second
-  private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
-  public static final long INITIAL_DELAY =
-    ThreadLocalRandom.current()
-      .nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
+    private static final Logger logger = LoggerFactory.getLogger(EnergyConsumptionService.class);
+    private static final long INTERVAL = 5000; // 5 seconds
+    private static final long MIN_INITIAL_DELAY = 1000; // 1 second
+    private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
+    public static final long INITIAL_DELAY = ThreadLocalRandom.current().nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
 
-  private static final NodeType NODE_TYPE = NodeType.CONSUMER;
-  private static final Association ASSOCIATION = Association.COMMUNITY;
+    //Starts with 00:00 - ends with 23:00 //Peak in the morning and afternoon hours - small peak for lunch
+    private static final double[] HOURLY_CONSUMPTION_FACTORS = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.6, 0.9, 1.0, 0.6, 0.3, 0.3, 0.5, 0.3, 0.3, 0.3, 0.4, 0.7, 0.9, 1.0, 0.8, 0.8, 0.6, 0.2};
 
-  private final RabbitTemplate rabbit;
+    private static final NodeType NODE_TYPE = NodeType.CONSUMER;
+    private static final Association ASSOCIATION = Association.COMMUNITY;
 
-  public EnergyConsumptionService(RabbitTemplate rabbit) {
-    this.rabbit = rabbit;
-  }
+    private final RabbitTemplate rabbit;
 
-  @Scheduled(
-    fixedRate = INTERVAL,
-    initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyConsumptionService).INITIAL_DELAY}"
-  )
-  public void sendEnergyProductionData() {
-    // TODO: should be based on the time of day
-    final BigDecimal kwh = BigDecimal.valueOf(ThreadLocalRandom.current().nextDouble(0.1, 5.0));
-    final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, Instant.now().toString());
-    logger.info("Sending energy consumption data: {}", data);
-    this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
-  }
+    public EnergyConsumptionService(RabbitTemplate rabbit) {
+        this.rabbit = rabbit;
+    }
+
+    @Scheduled(fixedRate = INTERVAL, initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyConsumptionService).INITIAL_DELAY}")
+    public void sendEnergyConsumptionData() {
+        double factor = HOURLY_CONSUMPTION_FACTORS[LocalDateTime.now().getHour()];
+        double kwhValue = ThreadLocalRandom.current().nextDouble(0.01, 0.05) * factor;
+
+        final BigDecimal kwh = BigDecimal.valueOf(kwhValue);
+        final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, Instant.now().toString());
+        logger.info("Sending energy consumption data: {} kWh (factor: {})", kwh, factor);
+        this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
+    }
 }

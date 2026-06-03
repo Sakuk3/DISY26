@@ -8,6 +8,7 @@ import at.uastw.disys26bwi.mqSpec.dto.EnergyNodeMessageDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -17,33 +18,44 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class EnergyProductionService {
-  private static final Logger logger = LoggerFactory.getLogger(EnergyProductionService.class);
-  private static final long INTERVAL = 5000; // 5 seconds
-  private static final long MIN_INITIAL_DELAY = 1000; // 1 second
-  private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
-  public static final long INITIAL_DELAY =
-    ThreadLocalRandom.current()
-      .nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
+    private static final Logger logger = LoggerFactory.getLogger(EnergyProductionService.class);
 
-  private static final NodeType NODE_TYPE = NodeType.PRODUCER;
-  private static final Association ASSOCIATION = Association.COMMUNITY;
+    @Value("${weatherapi.panel-size-m2}")
+    private double panelSizeM2;
 
-  private final RabbitTemplate rabbit;
-  private final WeatherController weatherController;
+    @Value("${weatherapi.efficiency}")
+    private double efficiency;
 
-  public EnergyProductionService(RabbitTemplate rabbit, WeatherController weatherController) {
-    this.rabbit = rabbit;
-    this.weatherController = weatherController;
-  }
+    private static final long INTERVAL = 5000; // 5 seconds
+    private static final long MIN_INITIAL_DELAY = 1000; // 1 second
+    private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
+    public static final long INITIAL_DELAY =
+            ThreadLocalRandom.current()
+                    .nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
 
-  @Scheduled(
-    fixedRate = INTERVAL,
-    initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyProductionService).INITIAL_DELAY}"
-  )
-  public void sendEnergyProductionData() {
-    final BigDecimal kwh = BigDecimal.valueOf(weatherController.getSunlightIntensity() * 0.001);
-    final EnergyNodeMessageDto data = new EnergyNodeMessageDto(NODE_TYPE, ASSOCIATION, kwh, Instant.now().toString());
-    logger.info("Sending energy production data: {}", data);
-    this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
-  }
+    private static final NodeType NODE_TYPE = NodeType.PRODUCER;
+    private static final Association ASSOCIATION = Association.COMMUNITY;
+
+    private final RabbitTemplate rabbit;
+    private final WeatherController weatherController;
+
+    public EnergyProductionService(RabbitTemplate rabbit, WeatherController weatherController) {
+        this.rabbit = rabbit;
+        this.weatherController = weatherController;
+    }
+
+    @Scheduled(
+            fixedRate = INTERVAL,
+            initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyProductionService).INITIAL_DELAY}"
+    )
+    public void sendEnergyProductionData() {
+        double radiationWm2 = weatherController.getSunlightIntensity();
+        double kwh = (radiationWm2 / 1000.0) * panelSizeM2 * efficiency * (INTERVAL / 1000.0 / 3600.0);
+
+        final EnergyNodeMessageDto data = new EnergyNodeMessageDto(
+                NODE_TYPE, ASSOCIATION, BigDecimal.valueOf(kwh), Instant.now().toString()
+        );
+        logger.info("Sending energy production data: {} kWh (radiation: {} W/m²)", kwh, radiationWm2);
+        this.rabbit.convertAndSend(QueueNames.ENERGY_EVENTS_QUEUE, data);
+    }
 }
