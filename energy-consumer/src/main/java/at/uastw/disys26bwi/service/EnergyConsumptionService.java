@@ -21,7 +21,6 @@ public class EnergyConsumptionService {
     private static final long INTERVAL = 5000; // 5 seconds
     private static final long MIN_INITIAL_DELAY = 1000; // 1 second
     private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
-    public static final long INITIAL_DELAY = ThreadLocalRandom.current().nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
 
     //Starts with 00:00 - ends with 23:00 //Peak in the morning and afternoon hours - small peak for lunch
     private static final double[] HOURLY_CONSUMPTION_FACTORS = {0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.6, 0.9, 1.0, 0.6, 0.3, 0.3, 0.5, 0.3, 0.3, 0.3, 0.4, 0.7, 0.9, 1.0, 0.8, 0.8, 0.6, 0.2};
@@ -35,7 +34,7 @@ public class EnergyConsumptionService {
         this.rabbit = rabbit;
     }
 
-    @Scheduled(fixedRate = INTERVAL, initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyConsumptionService).INITIAL_DELAY}")
+    @Scheduled(fixedRate = INTERVAL)
     public void sendEnergyConsumptionData() {
         double factor = HOURLY_CONSUMPTION_FACTORS[LocalDateTime.now().getHour()];
         double kwhValue = ThreadLocalRandom.current().nextDouble(0.01, 0.05) * factor;

@@ -1,7 +1,6 @@
 package at.uastw.disys26bwi.service;
 
 import at.uastw.disys26bwi.entity.AssociationEntity;
-import at.uastw.disys26bwi.entity.EnergyEventEntity;
 import at.uastw.disys26bwi.entity.HourlyUsageEntity;
 import at.uastw.disys26bwi.entity.HourlyUsageId;
 import at.uastw.disys26bwi.mqSpec.constants.Association;
@@ -10,7 +9,6 @@ import at.uastw.disys26bwi.mqSpec.constants.QueueNames;
 import at.uastw.disys26bwi.mqSpec.dto.EnergyNodeMessageDto;
 import at.uastw.disys26bwi.mqSpec.dto.UsageUpdateMessageDto;
 import at.uastw.disys26bwi.repository.AssociationRepository;
-import at.uastw.disys26bwi.repository.EnergyEventRepository;
 import at.uastw.disys26bwi.repository.HourlyUsageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,21 +27,17 @@ public class EnergyUsageMonitoringService {
   private static final Logger logger = LoggerFactory.getLogger(EnergyUsageMonitoringService.class);
   private final RabbitTemplate rabbit;
   private final AssociationRepository associationRepository;
-  private final EnergyEventRepository energyEventRepository;
   private final HourlyUsageRepository hourlyUsageRepository;
 
-  public EnergyUsageMonitoringService(RabbitTemplate rabbit, AssociationRepository associationRepository, EnergyEventRepository energyEventRepository, HourlyUsageRepository hourlyUsageRepository) {
+  public EnergyUsageMonitoringService(RabbitTemplate rabbit, AssociationRepository associationRepository, HourlyUsageRepository hourlyUsageRepository) {
     this.rabbit = rabbit;
     this.associationRepository = associationRepository;
-    this.energyEventRepository = energyEventRepository;
     this.hourlyUsageRepository = hourlyUsageRepository;
   }
 
   @RabbitListener(queues = QueueNames.ENERGY_EVENTS_QUEUE)
   public void receiveMessage(EnergyNodeMessageDto message) {
     logger.info("Received energy event: {}", message);
-
-    this.saveEnergyEvent(message);
 
     final HourlyUsageEntity hourlyUsage = this.updateHourlyUsage(message);
 
@@ -94,18 +88,6 @@ public class EnergyUsageMonitoringService {
       newEntity.setCommunityProducedKwh(BigDecimal.ZERO);
       return newEntity;
     });
-  }
-
-  private void saveEnergyEvent(EnergyNodeMessageDto message) {
-    final AssociationEntity association = getOrCreateAssociation(message.association());
-    final var entity = new EnergyEventEntity();
-    entity.setAssociationId(association.getId());
-    entity.setKwh(message.kwh());
-    entity.setEventType(message.type().toString());
-    entity.setOccurredAt(
-      OffsetDateTime.ofInstant(Instant.parse(message.datetime()), ZoneOffset.UTC)
-    );
-    energyEventRepository.save(entity);
   }
 
   private AssociationEntity getOrCreateAssociation(Association association) {
