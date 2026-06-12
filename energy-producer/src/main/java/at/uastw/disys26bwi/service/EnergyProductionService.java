@@ -26,8 +26,6 @@ public class EnergyProductionService {
     private double efficiency;
 
     private static final long INTERVAL = 5000; // 5 seconds
-    private static final long MIN_INITIAL_DELAY = 1000; // 1 second
-    private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
 
     private static final NodeType NODE_TYPE = NodeType.PRODUCER;
     private static final Association ASSOCIATION = Association.COMMUNITY;
