@@ -79,14 +79,4 @@ public class EnergyService {
       throw new EnergyServiceException("REST API request was interrupted", e);
     }
   }
-
-  public static class EnergyServiceException extends RuntimeException {
-    public EnergyServiceException(String message) {
-      super(message);
-    }
-
-    public EnergyServiceException(String message, Throwable cause) {
-      super(message, cause);
-    }
-  }
 }

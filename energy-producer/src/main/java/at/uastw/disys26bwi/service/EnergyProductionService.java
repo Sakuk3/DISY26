@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class EnergyProductionService {
@@ -27,11 +26,6 @@ public class EnergyProductionService {
     private double efficiency;
 
     private static final long INTERVAL = 5000; // 5 seconds
-    private static final long MIN_INITIAL_DELAY = 1000; // 1 second
-    private static final long MAX_INITIAL_DELAY = 5000; // 5 seconds
-    public static final long INITIAL_DELAY =
-            ThreadLocalRandom.current()
-                    .nextLong(MIN_INITIAL_DELAY, MAX_INITIAL_DELAY);
 
     private static final NodeType NODE_TYPE = NodeType.PRODUCER;
     private static final Association ASSOCIATION = Association.COMMUNITY;
@@ -44,10 +38,7 @@ public class EnergyProductionService {
         this.weatherController = weatherController;
     }
 
-    @Scheduled(
-            fixedRate = INTERVAL,
-            initialDelayString = "#{T(at.uastw.disys26bwi.service.EnergyProductionService).INITIAL_DELAY}"
-    )
+    @Scheduled(fixedRate = INTERVAL)
     public void sendEnergyProductionData() {
         double radiationWm2 = weatherController.getSunlightIntensity();
         double kwh = (radiationWm2 / 1000.0) * panelSizeM2 * efficiency * (INTERVAL / 1000.0 / 3600.0);

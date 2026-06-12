@@ -90,7 +90,6 @@ services:
     networks:
       - database-network
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
       - database-data:/var/lib/postgresql/
 
   pgadmin:
