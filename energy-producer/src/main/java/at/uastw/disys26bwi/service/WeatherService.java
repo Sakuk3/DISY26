@@ -1,4 +1,4 @@
-package at.uastw.disys26bwi.controller;
+package at.uastw.disys26bwi.service;
 
 import at.uastw.disys26bwi.dto.OpenMeteoResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
-import at.uastw.disys26bwi.exception.WeatherControllerException;
+import at.uastw.disys26bwi.exception.WeatherServiceException;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -21,8 +21,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
-public class WeatherController {
-    private static final Logger logger = LoggerFactory.getLogger(WeatherController.class);
+public class WeatherService {
+    private static final Logger logger = LoggerFactory.getLogger(WeatherService.class);
 
     @Value("${weatherapi.latitude}")
     private String latitude;
@@ -36,7 +36,7 @@ public class WeatherController {
     private final HttpClient httpClient;
     private final ObjectMapper objectMapper;
 
-    public WeatherController() {
+    public WeatherService() {
         this.httpClient = HttpClient.newHttpClient();
         this.objectMapper = new ObjectMapper();
     }
@@ -93,7 +93,7 @@ public class WeatherController {
             );
 
             if (response.statusCode() < 200 || response.statusCode() >= 300) {
-                throw new WeatherControllerException(
+                throw new WeatherServiceException(
                         "API request failed with status " + response.statusCode()
                                 + ": " + response.body()
                 );
@@ -102,10 +102,10 @@ public class WeatherController {
             return objectMapper.readValue(response.body(), OpenMeteoResponse.class);
 
         } catch (IOException e) {
-            throw new WeatherControllerException("Could not connect to External Weather API", e);
+            throw new WeatherServiceException("Could not connect to External Weather API", e);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new WeatherControllerException("Weather API request was interrupted", e);
+            throw new WeatherServiceException("Weather API request was interrupted", e);
         }
     }
 }

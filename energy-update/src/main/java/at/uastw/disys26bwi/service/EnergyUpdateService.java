@@ -2,6 +2,7 @@ package at.uastw.disys26bwi.service;
 
 import at.uastw.disys26bwi.entity.AssociationEntity;
 import at.uastw.disys26bwi.entity.HourlyPercentagesEntity;
+import at.uastw.disys26bwi.entity.HourlyPercentagesId;
 import at.uastw.disys26bwi.mqSpec.constants.Association;
 import at.uastw.disys26bwi.mqSpec.constants.QueueNames;
 import at.uastw.disys26bwi.mqSpec.dto.UsageUpdateMessageDto;
@@ -34,38 +35,48 @@ public class EnergyUpdateService {
     public void receiveMessage(UsageUpdateMessageDto message) {
         logger.info("Received usage update: {}", message);
 
+        //Wie viel Prozent des Community-Pools wurden aufgebraucht
+        final BigDecimal communityDepletedPct = message.communityProducedKwh().compareTo(BigDecimal.ZERO) == 0
+                ? BigDecimal.ZERO
+                : message.communityUsedKwh().compareTo(message.communityProducedKwh()) == 0
+                ? new BigDecimal("100")
+                : message.communityUsedKwh().divide(message.communityProducedKwh(), RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
+
+
+        final BigDecimal total = message.gridUsedKwh().add(message.communityUsedKwh());
+
+        //Wie viel Prozent des Gesamtverbrauchs wurden vom Grid bereitgestellt
+        final BigDecimal gridPortionPct = total.compareTo(BigDecimal.ZERO) == 0
+                ? BigDecimal.ZERO
+                : message.gridUsedKwh().divide(total, RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
+
+        final HourlyPercentagesEntity entity = getHourlyPercentages(message);
+        entity.setSelfConsumptionPct(communityDepletedPct);
+        entity.setGridDependencyPct(gridPortionPct);
+        entity.setUpdatedAt(OffsetDateTime.now());
+        this.hourlyPercentagesRepository.save(entity);
+    }
+
+    private HourlyPercentagesEntity getHourlyPercentages(UsageUpdateMessageDto message) {
+        final AssociationEntity association = getOrCreateAssociation(message.association());
         final OffsetDateTime hourBucket = Instant.parse(message.hourBucket())
                 .atOffset(ZoneOffset.UTC)
                 .withMinute(0)
                 .withSecond(0)
                 .withNano(0);
 
+        final HourlyPercentagesId id = new HourlyPercentagesId();
+        id.setAssociationId(association.getId());
+        id.setHourBucket(hourBucket);
 
-        // Community-Anteil in Prozent berechnen
-        // Wenn nichts produziert wurde, ist der Pool 0% depleted
-        // Wenn produziert == verbraucht, ist der Pool 100% depleted
-        // Sonst: communityUsed / communityProduced * 100
-        final BigDecimal communityDepletedPct = message.communityProducedKwh().compareTo(BigDecimal.ZERO) == 0
-                ? BigDecimal.ZERO
-                : message.communityUsedKwh().compareTo(message.communityProducedKwh()) == 0
-                ? new BigDecimal("100")
-                : message.communityUsedKwh().divide(message.communityProducedKwh(), RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
-        // Nenner berechnen: gesamter Energieverbrauch (Community + Grid)
-        final BigDecimal total = message.gridUsedKwh().add(message.communityUsedKwh());
-
-        // Grid-Anteil in Prozent berechnen
-        // Wenn total = 0 (noch kein Verbrauch), ist Grid-Anteil 0% um Division durch Null zu vermeiden
-        // Sonst: gridUsed / total * 100
-        final BigDecimal gridPortionPct = total.compareTo(BigDecimal.ZERO) == 0
-                ? BigDecimal.ZERO
-                : message.gridUsedKwh().divide(total, RoundingMode.HALF_UP).multiply(new BigDecimal("100"));
-        final HourlyPercentagesEntity entity = new HourlyPercentagesEntity();
-        entity.setAssociationId(this.getOrCreateAssociation(message.association()).getId());
-        entity.setHourBucket(hourBucket);
-        entity.setSelfConsumptionPct(communityDepletedPct);
-        entity.setGridDependencyPct(gridPortionPct);
-        entity.setUpdatedAt(OffsetDateTime.now());
-        this.hourlyPercentagesRepository.save(entity);
+        return hourlyPercentagesRepository.findById(id).orElseGet(() -> {
+            var newEntity = new HourlyPercentagesEntity();
+            newEntity.setAssociationId(association.getId());
+            newEntity.setHourBucket(hourBucket);
+            newEntity.setSelfConsumptionPct(BigDecimal.ZERO);
+            newEntity.setGridDependencyPct(BigDecimal.ZERO);
+            return newEntity;
+        });
     }
 
     private AssociationEntity getOrCreateAssociation(Association association) {

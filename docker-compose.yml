@@ -91,6 +91,7 @@ services:
       - database-network
     volumes:
       - database-data:/var/lib/postgresql/
+      - ./init:/docker-entrypoint-initdb.d
 
   pgadmin:
     image: dpage/pgadmin4
