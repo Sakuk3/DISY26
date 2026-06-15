@@ -31,7 +31,7 @@ public class EnergyController {
     return this.energyRepository.getCurrentEnergy();
   }
 
-    @GetMapping({"/historic", "/historical"})
+    @GetMapping({ "/historical"})
   public HistoricEnergyDto getHistoricEnergy(
     @RequestParam("start") LocalDateTime start,
     @RequestParam("end") LocalDateTime end

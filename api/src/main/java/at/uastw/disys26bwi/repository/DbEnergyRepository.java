@@ -14,9 +14,9 @@ import java.util.Objects;
 @Component
 public class DbEnergyRepository implements EnergyRepository {
 
-    private final JpaEnergyViewRepository repository;
+    private final EnergyViewRepository repository;
 
-    public DbEnergyRepository(JpaEnergyViewRepository repository) {
+    public DbEnergyRepository(EnergyViewRepository repository) {
         this.repository = repository;
     }
 

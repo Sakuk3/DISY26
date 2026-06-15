@@ -9,8 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-//This is the database access layer. It can read the newest hourly row and all rows between start and end.
-public interface JpaEnergyViewRepository extends JpaRepository<HourlyEnergyView, HourlyEnergyViewId> {
+public interface EnergyViewRepository extends JpaRepository<HourlyEnergyView, HourlyEnergyViewId> {
 
     Optional<HourlyEnergyView> findTopByOrderByHourDesc();
 
