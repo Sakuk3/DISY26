@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class EnergyController {
@@ -45,8 +46,20 @@ public class EnergyController {
 
     try {
       // Konvertierung von LocalDate zu LocalDateTime für die API
-      LocalDateTime start = startDate.getValue().atStartOfDay();
-      LocalDateTime end = endDate.getValue().atTime(23, 59);
+        LocalDateTime start = startDate.getValue().atStartOfDay();
+
+        LocalDateTime now = LocalDateTime.now();
+        LocalDate selectedEndDate = endDate.getValue();
+
+        LocalDateTime end = selectedEndDate.plusDays(1).atStartOfDay().minusSeconds(1);
+
+        //If selected date is in the future
+        if (!start.isBefore(end)) {
+            communityProduced.setText("Invalid date range");
+            communityUsed.setText("Start date must be before end date");
+            gridUsed.setText("");
+            return;
+        }
 
       HistoricEnergyDto data = energyService.getHistoricEnergy(start, end);
       communityProduced.setText(data.communityProduced() + " kWh");
