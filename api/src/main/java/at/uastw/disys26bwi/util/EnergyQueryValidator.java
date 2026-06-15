@@ -20,13 +20,6 @@ public class EnergyQueryValidator {
         "Start time must be before end time"
       );
     }
-
-    if (end.isAfter(LocalDateTime.now())) {
-      throw new ResponseStatusException(
-        HttpStatus.BAD_REQUEST,
-        "End time cannot be in the future"
-      );
-    }
   }
 }
 

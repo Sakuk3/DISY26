@@ -53,7 +53,6 @@ public class EnergyController {
 
         LocalDateTime end = selectedEndDate.plusDays(1).atStartOfDay().minusSeconds(1);
 
-        //If selected date is in the future
         if (!start.isBefore(end)) {
             communityProduced.setText("Invalid date range");
             communityUsed.setText("Start date must be before end date");
