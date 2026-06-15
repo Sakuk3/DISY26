@@ -39,7 +39,7 @@ public class EnergyService {
     String startParam = URLEncoder.encode(start.toString(), StandardCharsets.UTF_8);
     String endParam = URLEncoder.encode(end.toString(), StandardCharsets.UTF_8);
 
-    JsonNode json = getJson("/energy/historic?start=" + startParam + "&end=" + endParam);
+      JsonNode json = getJson("/energy/historical?start=" + startParam + "&end=" + endParam);
 
     return new HistoricEnergyDto(
       LocalDateTime.parse(json.get("startDate").asText()),
