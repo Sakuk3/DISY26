@@ -3,7 +3,6 @@ package at.uastw.disys26bwi.repository;
 import at.uastw.disys26bwi.apiSpec.dto.CurrentEnergyDto;
 import at.uastw.disys26bwi.apiSpec.dto.HistoricEnergyDto;
 import at.uastw.disys26bwi.entity.HourlyEnergyView;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -13,9 +12,6 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 
 @Component
-// @Primary is important because InMemoryEnergyRepository is still a @Component.
-// Without @Primary, Spring sees two EnergyRepository implementations and may not know which one to use.
-@Primary
 public class DbEnergyRepository implements EnergyRepository {
 
     private final JpaEnergyViewRepository repository;
