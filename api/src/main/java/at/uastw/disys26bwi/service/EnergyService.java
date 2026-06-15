@@ -1,10 +1,11 @@
-package at.uastw.disys26bwi.repository;
+package at.uastw.disys26bwi.service;
 
 import at.uastw.disys26bwi.apiSpec.dto.CurrentEnergyDto;
 import at.uastw.disys26bwi.apiSpec.dto.HistoricEnergyDto;
 import at.uastw.disys26bwi.entity.HourlyEnergyView;
+import at.uastw.disys26bwi.repository.EnergyRepository;
+import at.uastw.disys26bwi.repository.EnergyViewRepository;
 import org.springframework.stereotype.Component;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
@@ -12,11 +13,11 @@ import java.time.ZoneOffset;
 import java.util.Objects;
 
 @Component
-public class DbEnergyRepository implements EnergyRepository {
+public class EnergyService implements EnergyRepository {
 
     private final EnergyViewRepository repository;
 
-    public DbEnergyRepository(EnergyViewRepository repository) {
+    public EnergyService(EnergyViewRepository repository) {
         this.repository = repository;
     }
 
