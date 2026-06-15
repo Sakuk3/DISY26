@@ -4,8 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
 
-@Entity(name = "v_hourly_energy")
+
+//@Entity marks it as a JPA entity.
+@Entity
+//@Table(name = "v_hourly_energy") explicitly tells Hibernate which database view/table this class maps to.
+@Table(name = "v_hourly_energy")
 @IdClass(HourlyEnergyViewId.class)
 public class HourlyEnergyView {
 
