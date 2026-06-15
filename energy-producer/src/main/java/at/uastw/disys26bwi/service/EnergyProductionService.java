@@ -1,6 +1,5 @@
 package at.uastw.disys26bwi.service;
 
-import at.uastw.disys26bwi.controller.WeatherController;
 import at.uastw.disys26bwi.mqSpec.constants.Association;
 import at.uastw.disys26bwi.mqSpec.constants.NodeType;
 import at.uastw.disys26bwi.mqSpec.constants.QueueNames;
@@ -31,16 +30,16 @@ public class EnergyProductionService {
     private static final Association ASSOCIATION = Association.COMMUNITY;
 
     private final RabbitTemplate rabbit;
-    private final WeatherController weatherController;
+    private final WeatherService weatherService;
 
-    public EnergyProductionService(RabbitTemplate rabbit, WeatherController weatherController) {
+    public EnergyProductionService(RabbitTemplate rabbit, WeatherService weatherService) {
         this.rabbit = rabbit;
-        this.weatherController = weatherController;
+        this.weatherService = weatherService;
     }
 
     @Scheduled(fixedRate = INTERVAL)
     public void sendEnergyProductionData() {
-        double radiationWm2 = weatherController.getSunlightIntensity();
+        double radiationWm2 = weatherService.getSunlightIntensity();
         double kwh = (radiationWm2 / 1000.0) * panelSizeM2 * efficiency * (INTERVAL / 1000.0 / 3600.0);
 
         final EnergyNodeMessageDto data = new EnergyNodeMessageDto(

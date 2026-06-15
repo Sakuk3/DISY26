@@ -26,9 +26,9 @@ CREATE TABLE hourly_usage
 (
     association_id         BIGINT         NOT NULL REFERENCES associations (id),
     hour_bucket            TIMESTAMPTZ    NOT NULL,
-    community_produced_kwh NUMERIC(12, 3) NOT NULL DEFAULT 0 CHECK (community_produced_kwh >= 0),
-    community_used_kwh     NUMERIC(12, 3) NOT NULL DEFAULT 0 CHECK (community_used_kwh >= 0),
-    grid_used_kwh          NUMERIC(12, 3) NOT NULL DEFAULT 0 CHECK (grid_used_kwh >= 0),
+    community_produced_kwh NUMERIC(12, 6) NOT NULL DEFAULT 0 CHECK (community_produced_kwh >= 0),
+    community_used_kwh     NUMERIC(12, 6) NOT NULL DEFAULT 0 CHECK (community_used_kwh >= 0),
+    grid_used_kwh          NUMERIC(12, 6) NOT NULL DEFAULT 0 CHECK (grid_used_kwh >= 0),
     created_at             TIMESTAMPTZ    NOT NULL DEFAULT now(),
     updated_at             TIMESTAMPTZ    NOT NULL DEFAULT now(),
     PRIMARY KEY (association_id, hour_bucket),

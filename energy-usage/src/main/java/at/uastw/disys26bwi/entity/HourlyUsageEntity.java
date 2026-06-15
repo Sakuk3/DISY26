@@ -1,90 +1,88 @@
 package at.uastw.disys26bwi.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
+import jakarta.persistence.*;
 
-@Entity(name = "hourly_usage")
+@Entity
+@Table(name = "hourly_usage")
 @IdClass(HourlyUsageId.class)
 public class HourlyUsageEntity {
 
-  @Id
-  @Column(name = "association_id")
-  private long associationId;
+    @Id
+    @Column(name = "association_id")
+    private long associationId;
 
-  @Id
-  @Column(name = "hour_bucket")
-  private java.time.OffsetDateTime hourBucket;
+    @Id
+    @Column(name = "hour_bucket")
+    private java.time.OffsetDateTime hourBucket;
 
-  @Column(name = "community_produced_kwh")
-  private java.math.BigDecimal communityProducedKwh;
+    @Column(name = "community_produced_kwh")
+    private java.math.BigDecimal communityProducedKwh;
 
-  @Column(name = "community_used_kwh")
-  private java.math.BigDecimal communityUsedKwh;
+    @Column(name = "community_used_kwh")
+    private java.math.BigDecimal communityUsedKwh;
 
-  @Column(name = "grid_used_kwh")
-  private java.math.BigDecimal gridUsedKwh;
+    @Column(name = "grid_used_kwh")
+    private java.math.BigDecimal gridUsedKwh;
 
-  @Column(name = "created_at", insertable = false, updatable = false)
-  private java.time.OffsetDateTime createdAt;
+    @Column(name = "created_at", insertable = false, updatable = false)
+    private java.time.OffsetDateTime createdAt;
 
-  @Column(name = "updated_at")
-  private java.time.OffsetDateTime updatedAt;
+    @Column(name = "updated_at")
+    private java.time.OffsetDateTime updatedAt;
 
-  public long getAssociationId() {
-    return associationId;
-  }
+    public long getAssociationId() {
+        return associationId;
+    }
 
-  public void setAssociationId(long associationId) {
-    this.associationId = associationId;
-  }
+    public void setAssociationId(long associationId) {
+        this.associationId = associationId;
+    }
 
-  public java.time.OffsetDateTime getHourBucket() {
-    return hourBucket;
-  }
+    public java.time.OffsetDateTime getHourBucket() {
+        return hourBucket;
+    }
 
-  public void setHourBucket(java.time.OffsetDateTime hourBucket) {
-    this.hourBucket = hourBucket;
-  }
+    public void setHourBucket(java.time.OffsetDateTime hourBucket) {
+        this.hourBucket = hourBucket;
+    }
 
-  public java.math.BigDecimal getCommunityProducedKwh() {
-    return communityProducedKwh;
-  }
+    public java.math.BigDecimal getCommunityProducedKwh() {
+        return communityProducedKwh;
+    }
 
-  public void setCommunityProducedKwh(java.math.BigDecimal communityProducedKwh) {
-    this.communityProducedKwh = communityProducedKwh.setScale(3, java.math.RoundingMode.HALF_UP);
-  }
+    public void setCommunityProducedKwh(java.math.BigDecimal communityProducedKwh) {
+        this.communityProducedKwh = communityProducedKwh.setScale(6, java.math.RoundingMode.HALF_UP);
+    }
 
-  public java.math.BigDecimal getCommunityUsedKwh() {
-    return communityUsedKwh;
-  }
+    public java.math.BigDecimal getCommunityUsedKwh() {
+        return communityUsedKwh;
+    }
 
-  public void setCommunityUsedKwh(java.math.BigDecimal communityUsedKwh) {
-    this.communityUsedKwh = communityUsedKwh.setScale(3, java.math.RoundingMode.HALF_UP);
-  }
+    public void setCommunityUsedKwh(java.math.BigDecimal communityUsedKwh) {
+        this.communityUsedKwh = communityUsedKwh.setScale(6, java.math.RoundingMode.HALF_UP);
+    }
 
-  public java.math.BigDecimal getGridUsedKwh() {
-    return gridUsedKwh;
-  }
+    public java.math.BigDecimal getGridUsedKwh() {
+        return gridUsedKwh;
+    }
 
-  public void setGridUsedKwh(java.math.BigDecimal gridUsedKwh) {
-    this.gridUsedKwh = gridUsedKwh.setScale(3, java.math.RoundingMode.HALF_UP);
-  }
+    public void setGridUsedKwh(java.math.BigDecimal gridUsedKwh) {
+        this.gridUsedKwh = gridUsedKwh.setScale(6, java.math.RoundingMode.HALF_UP);
+    }
 
-  public java.time.OffsetDateTime getCreatedAt() {
-    return createdAt;
-  }
+    public java.time.OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
 
-  public void setCreatedAt(java.time.OffsetDateTime createdAt) {
-    this.createdAt = createdAt;
-  }
+    public void setCreatedAt(java.time.OffsetDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 
-  public java.time.OffsetDateTime getUpdatedAt() {
-    return updatedAt;
-  }
+    public java.time.OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
-  public void setUpdatedAt(java.time.OffsetDateTime updatedAt) {
-    this.updatedAt = updatedAt;
-  }
+    public void setUpdatedAt(java.time.OffsetDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
 }
