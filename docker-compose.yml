@@ -33,8 +33,6 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    deploy:
-      replicas: 3
 
   energy-producer:
     build:
@@ -48,8 +46,6 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    deploy:
-      replicas: 3
 
   energy-update:
     build:
